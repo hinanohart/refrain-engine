@@ -4,6 +4,12 @@
 //! for audio (Strudel JSON / OSC), visual (wgpu/skia), code-rewrite (text
 //! template), and text (n-gram). Built-ins are populated in Phases 6-9.
 
+pub mod audio;
+pub mod schedule;
+
+pub use audio::{AudioAdapter, AudioFormat};
+pub use schedule::{schedule, Hap};
+
 use refrain_core::Refrain;
 use thiserror::Error;
 

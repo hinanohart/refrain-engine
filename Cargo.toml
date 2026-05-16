@@ -25,6 +25,9 @@ categories = ["compilers", "multimedia"]
 # `egg` (the foundation of egglog); full egglog Datalog rules are deferred
 # to v0.2 — egg covers all v0.1 rewrite needs with a stabler API surface.
 egg = "0.11"
+# Phase 6 (audio adapter): OSC encoding via rosc (MIT, single-crate, no
+# transitive deps beyond byteorder).
+rosc = "0.10"
 # Phase 5 (FFI)
 pyo3 = { version = "0.22", features = ["extension-module", "abi3-py310"] }
 arrow = "53"
