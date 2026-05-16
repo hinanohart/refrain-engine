@@ -7,11 +7,13 @@
 pub mod audio;
 pub mod code;
 pub mod schedule;
+pub mod text;
 pub mod visual;
 
 pub use audio::{AudioAdapter, AudioFormat};
 pub use code::{CodeAdapter, CodeLang};
 pub use schedule::{schedule, Hap};
+pub use text::{TextAdapter, TextStyle};
 pub use visual::VisualAdapter;
 
 use refrain_core::Refrain;
