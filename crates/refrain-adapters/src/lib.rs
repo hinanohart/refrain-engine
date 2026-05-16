@@ -36,3 +36,30 @@ pub trait RefrainAdapter: Send + Sync {
     fn emit(&self, refrain: &ExtractedRefrain, ctx: &EmitCtx) -> Result<Vec<u8>, AdapterErr>;
     fn capabilities(&self) -> AdapterCaps;
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct DummyAdapter;
+    impl RefrainAdapter for DummyAdapter {
+        fn name(&self) -> &str {
+            "dummy"
+        }
+        fn emit(&self, _r: &ExtractedRefrain, _ctx: &EmitCtx) -> Result<Vec<u8>, AdapterErr> {
+            Ok(vec![])
+        }
+        fn capabilities(&self) -> AdapterCaps {
+            AdapterCaps::default()
+        }
+    }
+
+    #[test]
+    fn dummy_adapter_emits_empty() {
+        let r = Refrain::new("dummy-host");
+        let ex = ExtractedRefrain { refrain: &r };
+        let bytes = DummyAdapter.emit(&ex, &EmitCtx::default()).unwrap();
+        assert!(bytes.is_empty());
+        assert_eq!(DummyAdapter.name(), "dummy");
+    }
+}

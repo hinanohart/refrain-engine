@@ -12,3 +12,16 @@ pub fn refrain_to_json(r: &Refrain) -> Result<String> {
 pub fn refrain_from_json(s: &str) -> Result<Refrain> {
     Ok(serde_json::from_str(s)?)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn json_roundtrip() {
+        let r = Refrain::new("via-ffi");
+        let s = refrain_to_json(&r).unwrap();
+        let r2 = refrain_from_json(&s).unwrap();
+        assert_eq!(r, r2);
+    }
+}

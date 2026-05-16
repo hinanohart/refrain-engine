@@ -26,3 +26,16 @@ impl Default for Egraph {
         Self::new()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn egraph_identity_normalize() {
+        let e = Egraph::default();
+        let r = Refrain::new("identity");
+        let n = e.normalize(&r).unwrap();
+        assert_eq!(n, r);
+    }
+}
