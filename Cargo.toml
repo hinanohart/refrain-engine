@@ -21,8 +21,10 @@ categories = ["compilers", "multimedia"]
 
 [workspace.dependencies]
 # Phase 2-4 (core)
-chumsky = "0.10"
-egglog = "0.4"
+# Note: parser is hand-rolled (no chumsky dep). Equality saturation uses
+# `egg` (the foundation of egglog); full egglog Datalog rules are deferred
+# to v0.2 — egg covers all v0.1 rewrite needs with a stabler API surface.
+egg = "0.11"
 # Phase 5 (FFI)
 pyo3 = { version = "0.22", features = ["extension-module", "abi3-py310"] }
 arrow = "53"
