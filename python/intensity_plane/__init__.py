@@ -1,27 +1,31 @@
-"""intensity_plane: JAX autodiff + cell-complex topology layer for Refrain.
+"""intensity_plane: forward-mode autodiff + cell complex layer for Refrain.
 
-Phase 5 wires up the actual implementation. This module currently exposes
-public type stubs so import succeeds.
+The intensity plane sits between the Rust core (`refrain_core` AST) and
+the four media adapters. It provides:
+
+* `Dual`, `derivative`, `jacfwd` — forward-mode autodiff over dual
+  numbers (pure Python; ε² = 0).
+* `ehrhard_regnier_d` — symbolic differential combinator over Refrain
+  Pattern JSON.
+* `CellComplex`, `Cell` — finite cell complex with boundary references.
+
+JAX (reverse-mode autodiff over compute graphs) and TopoModelX
+(higher-order topology layers via DLPack zero-copy) integrate in v0.2;
+see `docs/roadmap.md`.
 """
 
 from __future__ import annotations
 
+from .autodiff import Dual, derivative, jacfwd
+from .complex import Cell, CellComplex
+from .ehrhard import ehrhard_regnier_d
+
 __version__ = "0.1.0"
-__all__ = ["dyt", "ehrhard_regnier_d", "IntensityPlane"]
-
-
-class IntensityPlane:
-    """Placeholder for the topology-aware intensity field (Phase 5)."""
-
-    def __init__(self) -> None:
-        self._cells: list = []
-
-
-def dyt(_y, _t):  # noqa: ANN001,ANN201 — fully typed in Phase 5
-    """Forward-mode dual-number Jacobian d y / d t (Phase 5 stub)."""
-    raise NotImplementedError("dyt lands in Phase 5")
-
-
-def ehrhard_regnier_d(_term):  # noqa: ANN001,ANN201
-    """Ehrhard-Regnier differential combinator D[term] (Phase 5 stub)."""
-    raise NotImplementedError("ehrhard_regnier_d lands in Phase 5")
+__all__ = [
+    "Dual",
+    "derivative",
+    "jacfwd",
+    "ehrhard_regnier_d",
+    "Cell",
+    "CellComplex",
+]

@@ -1,21 +1,66 @@
-//! refrain-ffi: PyO3 + Arrow IPC bridge for the Python intensity_plane adapter.
+//! refrain-ffi: PyO3 bindings for `refrain_py._native`.
 //!
-//! Phase 5 wires up `#[pyfunction]` exports and Arrow zero-copy IPC.
+//! Exposes the parser and the e-graph normalizer to Python. The boundary
+//! is JSON for v0.1.0; Arrow IPC zero-copy lands when adapters need to
+//! ship binary buffers (Phase 7+).
+
+use pyo3::exceptions::PyValueError;
+use pyo3::prelude::*;
 
 use refrain_core::Refrain;
-use refrain_core::Result;
+use refrain_core::Result as RefrainResult;
+use refrain_egraph::Egraph;
 
-pub fn refrain_to_json(r: &Refrain) -> Result<String> {
+pub fn refrain_to_json(r: &Refrain) -> RefrainResult<String> {
     Ok(serde_json::to_string(r)?)
 }
 
-pub fn refrain_from_json(s: &str) -> Result<Refrain> {
+pub fn refrain_from_json(s: &str) -> RefrainResult<Refrain> {
     Ok(serde_json::from_str(s)?)
+}
+
+#[pyfunction]
+fn parse_refrain(src: &str) -> PyResult<String> {
+    let r = refrain_core::parse(src).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    serde_json::to_string(&r).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn normalize_refrain(json_src: &str) -> PyResult<String> {
+    let r: Refrain = serde_json::from_str(json_src)
+        .map_err(|e| PyValueError::new_err(format!("invalid refrain JSON: {}", e)))?;
+    let e = Egraph::default();
+    let n = e.normalize(&r).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    serde_json::to_string(&n).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn parse_and_normalize(src: &str) -> PyResult<String> {
+    let r = refrain_core::parse(src).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let e = Egraph::default();
+    let n = e.normalize(&r).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    serde_json::to_string(&n).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
+
+/// The native module exposed as `refrain_py._native`.
+#[pymodule]
+fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(parse_refrain, m)?)?;
+    m.add_function(wrap_pyfunction!(normalize_refrain, m)?)?;
+    m.add_function(wrap_pyfunction!(parse_and_normalize, m)?)?;
+    m.add_function(wrap_pyfunction!(version, m)?)?;
+    Ok(())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use refrain_core::Refrain;
 
     #[test]
     fn json_roundtrip() {
