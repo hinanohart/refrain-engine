@@ -5,10 +5,12 @@
 //! template), and text (n-gram). Built-ins are populated in Phases 6-9.
 
 pub mod audio;
+pub mod code;
 pub mod schedule;
 pub mod visual;
 
 pub use audio::{AudioAdapter, AudioFormat};
+pub use code::{CodeAdapter, CodeLang};
 pub use schedule::{schedule, Hap};
 pub use visual::VisualAdapter;
 
