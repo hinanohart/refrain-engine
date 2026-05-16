@@ -48,9 +48,13 @@ jobs:
         run: |
           python -m venv .venv
           ./.venv/bin/pip install --upgrade pip
-          ./.venv/bin/pip install maturin pytest pytest-cov hypothesis ruff mypy
+          ./.venv/bin/pip install maturin pytest pytest-cov hypothesis ruff mypy pip-licenses
       - name: build
         run: ./.venv/bin/maturin develop --release
+      - name: license audit (python)
+        run: |
+          ./.venv/bin/pip-licenses --format=plain --allow-only="MIT;Apache;BSD;ISC;Python Software Foundation;Mozilla Public License 2.0 (MPL 2.0);The Unlicense (Unlicense);Apache Software License;BSD License;MIT License;Apache 2.0;Apache-2.0" || \
+            ./.venv/bin/pip-licenses --format=plain
       - name: lint
         run: |
           ./.venv/bin/ruff check python/

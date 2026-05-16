@@ -35,8 +35,9 @@ A `refrain` is a named, structured time-pattern. The engine:
    parser, ~250 LOC, zero external parser deps).
 2. **Normalizes** via `egg` rewrite rules with an `AstSize` extraction cost model
    (`refrain-egraph`). Full `egglog`-style Datalog rules are deferred to v0.2.
-3. **Differentiates** via dual-number forward-mode + Ehrhard-Regnier differential combinators
-   (`python/intensity_plane`, JAX-backed) — *in progress*.
+3. **Differentiates** via dual-number forward-mode autodiff (no JAX dep in v0.1.0) plus an
+   Ehrhard-Regnier differential combinator (`python/intensity_plane`). JAX-backed
+   reverse-mode lands in v0.2 — see `docs/roadmap.md`.
 4. **Emits** to a pluggable adapter (audio via Strudel/OSC, visual via deterministic PNG,
    code via Python/Rust source templates, text via seeded prose/bullets). Adapters
    implement a small `RefrainAdapter` trait and are constructed by hand in v0.1.0;
