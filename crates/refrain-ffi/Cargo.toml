@@ -1,0 +1,22 @@
+[package]
+name = "refrain-ffi"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Differential Refrain Engine: PyO3 + Arrow IPC bridge"
+keywords.workspace = true
+categories.workspace = true
+
+[lib]
+name = "refrain_ffi"
+path = "src/lib.rs"
+# crate-type cdylib is added in Phase 5 when PyO3 is wired up.
+
+[dependencies]
+refrain-core = { path = "../refrain-core" }
+refrain-egraph = { path = "../refrain-egraph" }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }

@@ -1,0 +1,23 @@
+[package]
+name = "refrain-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Differential Refrain Engine core: DSL parser and AST"
+keywords.workspace = true
+categories.workspace = true
+
+[lib]
+name = "refrain_core"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "refrain-py"
+version = "0.1.0"
+description = "Differential Refrain Engine — Python bindings (intensity plane + autodiff)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "runza", email = "runzaisongpu95@gmail.com" }]
+keywords = ["dsl", "autodiff", "egraph", "live-coding", "topology"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
+    "Topic :: Multimedia",
+    "Topic :: Software Development :: Compilers",
+]
+dependencies = [
+    "jax>=0.4.30",
+    "jaxlib>=0.4.30",
+    "numpy>=1.26",
+    "pyarrow>=15",
+]
+
+[project.optional-dependencies]
+topology = ["topomodelx>=0.1.0"]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "hypothesis>=6",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name = "refrain_py._native"
+manifest-path = "crates/refrain-ffi/Cargo.toml"
+features = ["pyo3/extension-module"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["python/tests", "tests"]
+addopts = "-v --strict-markers"

@@ -1,0 +1,29 @@
+[package]
+name = "refrain-rhizome"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Differential Refrain Engine: Loro CRDT bridge (optional)"
+keywords.workspace = true
+categories.workspace = true
+
+[lib]
+name = "refrain_rhizome"
+path = "src/lib.rs"
+
+[features]
+default = []
+# Loro CRDT pulls in heavy deps and is opt-in until Loro 1.0 stable.
+rhizome = []
+
+[dependencies]
+refrain-core = { path = "../refrain-core" }
+refrain-egraph = { path = "../refrain-egraph" }
+serde = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
