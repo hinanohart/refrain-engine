@@ -68,6 +68,14 @@ Initial release of the Differential Refrain Engine.
 - **TopoModelX DLPack bridge deferred**: `CellComplex` ships a
   lightweight Python representation; the zero-copy TopoModelX bridge is
   scheduled for v0.2.
+- **`inventory::submit!` auto-registration deferred**: v0.1.0 adapters
+  are constructed by hand; trait-based plug-in discovery via
+  `inventory::submit!` is wired up in v0.2 when third-party adapters
+  become a load-bearing concern.
+- **JSON instead of Arrow IPC on the PyO3 boundary**: the
+  `refrain_py._native` module ships JSON-stringified refrains in v0.1.0.
+  Arrow IPC zero-copy lands when an adapter needs to round-trip binary
+  buffers across the boundary.
 
 ### Not yet shipped (planned for v0.2)
 

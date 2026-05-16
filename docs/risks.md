@@ -4,15 +4,19 @@ Living document of risks that could block v0.1.0 release.
 
 ## Loro `1.0.0-beta.5` pin
 
-The `loro` crate is pinned to `1.0.0-beta.5` in `Cargo.toml`. Beta releases on
-crates.io can be **yanked**.
+The `loro` crate is declared in `Cargo.toml` `[workspace.dependencies]`
+at version `1.0.0-beta.5`. As of v0.1.0 it is **not** pulled into the
+lockfile because no member crate actually depends on it — the
+`refrain-rhizome` crate ships only the bridge data structure (a
+two-layer HashMap) without Loro wiring. The wiring activates when the
+`rhizome` feature is enabled.
 
-- **Detection**: CI on every push runs `cargo deny` which reports yanked deps.
-- **Mitigation**: rhizome support is behind `--features rhizome`; if Loro is
-  yanked, the default-feature build keeps working.
+- **Detection**: CI runs `cargo deny` on every push, which reports yanked
+  deps; this only matters when `rhizome` is enabled in CI.
+- **Mitigation**: default build is unaffected by upstream Loro churn.
 - **Fallback**: if Loro freezes beta indefinitely we will (a) pin to a git
   revision in `Cargo.toml`, or (b) write a thin in-house event-graph CRDT
-  shim sufficient for the two-layer HashMap bridge (Phase 10 scope).
+  shim sufficient to drive the bridge HashMap.
 
 ## JAX on WSL2 (CPU-only)
 

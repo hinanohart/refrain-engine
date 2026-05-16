@@ -37,8 +37,10 @@ A `refrain` is a named, structured time-pattern. The engine:
    (`refrain-egraph`). Full `egglog`-style Datalog rules are deferred to v0.2.
 3. **Differentiates** via dual-number forward-mode + Ehrhard-Regnier differential combinators
    (`python/intensity_plane`, JAX-backed) — *in progress*.
-4. **Emits** to a pluggable adapter (audio via Strudel/OSC, visual via wgpu, code via
-   templates, text via simple n-gram), trait-registered through `inventory::submit!` — *in progress*.
+4. **Emits** to a pluggable adapter (audio via Strudel/OSC, visual via deterministic PNG,
+   code via Python/Rust source templates, text via seeded prose/bullets). Adapters
+   implement a small `RefrainAdapter` trait and are constructed by hand in v0.1.0;
+   `inventory::submit!`-based auto-registration is scheduled for v0.2.
 5. **Optionally syncs** patterns across collaborators via Loro CRDT eg-walker
    (`refrain-rhizome`, opt-in `--features rhizome`) — *in progress*.
 
@@ -63,8 +65,11 @@ pip install refrain-py           # Python bindings (maturin-built)
 
 ## Quickstart
 
-See [`examples/`](./examples/) for working refrains across all 4 adapters
-(populated alongside Phases 6–9).
+The five-test integration suite in
+[`crates/refrain-adapters/tests/integration.rs`](./crates/refrain-adapters/tests/integration.rs)
+walks a canonical refrain through every adapter end-to-end and is the most
+useful executable example in v0.1.0. Standalone runnable example files in
+`examples/` are scheduled for v0.2.
 
 ## Philosophy footnote
 

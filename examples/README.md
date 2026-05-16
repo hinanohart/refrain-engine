@@ -1,21 +1,22 @@
 # Examples
 
-Working refrains across the four adapters. This directory is populated
-alongside Phases 6–9 (audio / visual / code / text):
+Standalone `.refrain` example files and per-adapter `cargo run` examples
+are scheduled for **v0.2**.
 
-| File | Phase | Adapter | Description |
-|---|---|---|---|
-| `melody_loop.refrain` | 6 | audio (Strudel/OSC) | 4-bar looped C major scale |
-| `bouncing_circle.refrain` | 7 | visual (wgpu/skia) | Cell-complex over time |
-| `code_rewrite_demo.refrain` | 8 | code (template) | Refrain → Python source |
-| `markov_lyric.refrain` | 9 | text (n-gram) | Repeated lyric synthesis |
+For v0.1.0, the canonical end-to-end demonstration lives in
+[`crates/refrain-adapters/tests/integration.rs`](../crates/refrain-adapters/tests/integration.rs).
+It parses, normalizes, and emits the following refrain through every
+built-in adapter:
 
-Each refrain file is a single S-expression. To run an example once the
-adapters land:
-
-```bash
-cargo run --release --example refrain -- examples/melody_loop.refrain --adapter audio
+```lisp
+(refrain melody-a
+  (territorialize (loop 4 (note C4 q)))
+  (deterritorialize (dy/dx intensity time))
+  (reterritorialize (quotient ~rotation ~transpose)))
 ```
 
-The complete example walkthroughs live in
-[`docs/examples.md`](../docs/examples.md) once written (Phase 11).
+Run it with:
+
+```bash
+cargo test -p refrain-adapters --test integration -- --nocapture
+```

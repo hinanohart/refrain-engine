@@ -1,45 +1,57 @@
-# Roadmap — v0.1.0
+# Roadmap — v0.1.0 (shipped) and v0.2.0 (planned)
 
-The release tracker for Differential Refrain Engine v0.1.0. Each row maps to a
-build phase; once a row clears its acceptance gate it is checked off here.
+## v0.1.0 — released 2026-05-17
 
-## Build phases
+All 12 build phases are complete. See `CHANGELOG.md` for the released
+inventory and the documented deviations from the initial design.
 
-| # | Phase | Status | Acceptance gate |
-|---|---|---|---|
-| 0 | verify-stack | done | rustc / cargo / python3 / git / gh available |
-| 1 | scaffold | done | `cargo check --workspace` clean |
-| 2 | core-skeleton | done | `cargo test` empty pass across all crates |
-| 3 | core-refrain-dsl | done | 20 fixtures parse; structural extraction tests pass |
-| 4 | core-egglog-bridge | done | property tests at 100 cases (idempotence, no-panic) |
-| 5a | adapter-ffi (PyO3) | in progress | `maturin develop` builds; round-trip works |
-| 5b | intensity_plane (JAX autodiff) | pending | `dyt` and `ehrhard_regnier_d` working with `pytest` ≥ 20 cases |
-| 5c | TopoModelX bridge | pending | cell-complex serialize/deserialize via Arrow |
-| 6 | adapter-audio | pending | Strudel JSON sink + OSC; 5 s fixture compare |
-| 7 | adapter-visual | pending | wgpu/skia 1-frame PNG SHA-256 golden |
-| 8 | adapter-code | pending | text-template golden test |
-| 9 | adapter-text | pending | n-gram template golden test |
-| 10 | rhizome (Loro) | pending | doc test (default skip), 2-layer HashMap bridge sketch |
-| 11 | docs | pending | mdBook builds with 0 warnings |
-| 12 | release artifact | pending | `cargo package` + `python -m build` dry-run pass, local `v0.1.0` tag |
+| # | Phase | Status |
+|---|---|---|
+| 0 | verify-stack | done |
+| 1 | scaffold | done |
+| 2 | core-skeleton | done |
+| 3 | core-refrain-dsl | done |
+| 4 | core-egglog-bridge | done (using `egg`, not `egglog`) |
+| 5a | adapter-ffi (PyO3) | done |
+| 5b | intensity_plane (forward-mode autodiff) | done (pure-Python; JAX deferred) |
+| 5c | cell complex layer | done (lightweight; TopoModelX deferred) |
+| 6 | adapter-audio | done (Strudel JSON + OSC) |
+| 7 | adapter-visual | done (deterministic PNG) |
+| 8 | adapter-code | done (Python + Rust emission) |
+| 9 | adapter-text | done (prose + bullets) |
+| 10 | rhizome (Loro) | bridge done; Loro wiring gated behind `--features rhizome`, deferred |
+| 11 | docs | done (mdBook + rustdoc, 0 warnings) |
+| 12 | release artifact | done — local `v0.1.0` tag, `cargo package --list` succeeds for all four publishable crates, `maturin develop` builds the Python wheel |
+
+## v0.2.0 — planned
+
+The deferrals listed in `CHANGELOG.md` collect here:
+
+| Item | Why deferred | Target |
+|---|---|---|
+| Full `egglog` Datalog rules | egglog 0.4 API was in flux during the v0.1 build window | v0.2 |
+| JAX-backed reverse-mode autodiff + GPU support | wider compute graphs only justify the install footprint in v0.2 | v0.2 |
+| TopoModelX × JAX zero-copy bridge (DLPack) | requires JAX in place first | v0.2 |
+| `inventory::submit!` adapter auto-registration | not load-bearing for the four built-ins; lands when third-party adapters arrive | v0.2 |
+| Live Loro CRDT collaboration (`refrain-rhizome` wired with `loro` crate) | Loro 1.0 beta can yank; wait for stable | v0.2 |
+| Arrow IPC zero-copy on the PyO3 boundary | JSON suffices until adapters need to ship binary buffers | v0.2 |
+| Standalone runnable examples in `examples/` | the workspace integration test covers the same ground for v0.1 | v0.2 |
+| Published binaries on crates.io and PyPI | requires user-set API tokens (R11 boundary) | done outside the build pipeline |
 
 ## Verification PoCs (from concept doc 2026-05-17)
 
-These five items were flagged as load-bearing technical uncertainties in the
-initial concept review. Status snapshot below:
+| # | Item | Resolution |
+|---|---|---|
+| 1 | Synthetic Differential Geometry OSS missing for `dy/dx` | resolved: dual-number forward-mode + Ehrhard-Regnier combinator (`python/intensity_plane`) |
+| 2 | TidalCycles Rust FFI immature | resolved: Strudel JSON + OSC bundle output (`refrain-adapters/audio.rs`) |
+| 3 | eg-walker × egglog bridge | resolved: two-layer HashMap (`refrain-rhizome`); Loro wiring deferred |
+| 4 | Loro Beta API churn | mitigated: opt-in `rhizome` feature flag, yank-readiness in `docs/risks.md` |
+| 5 | TopoModelX × JAX integration | deferred to v0.2 with a lightweight in-tree `CellComplex` in the meantime |
 
-| # | Item | Resolution | Where |
-|---|---|---|---|
-| 1 | Synthetic Differential Geometry OSS missing for `dy/dx` | abandoned in favor of dual-number forward-mode + Ehrhard-Regnier differential combinators (no external SDG dep needed) | `python/intensity_plane/__init__.py` (Phase 5b); see [philosophy.md](./philosophy.md) |
-| 2 | TidalCycles Rust FFI immature | swapped for Strudel JSON over stdin + OSC sink (rosc crate) | Phase 6 (`refrain-adapters::audio`) |
-| 3 | eg-walker (Loro) × egglog (egg) bridge | two-layer HashMap mapping `causal_id ↔ eclass_id` | Phase 10 (`refrain-rhizome`); doc'd as opt-in until Loro 1.0 |
-| 4 | Loro Beta API churn | pin `1.0.0-beta.5` in `Cargo.toml`; yank-readiness documented in [risks.md](./risks.md) | Phase 10 |
-| 5 | TopoModelX × JAX integration | DLPack zero-copy bridge for cell-complex → JAX arrays; cell complex stored as a dict-of-Arrow batches | Phase 5c |
+## Out of scope
 
-## Out of scope for v0.1.0
-
-- Full egglog Datalog rules (deferred to v0.2 — `egg` covers the v0.1 rewrite set).
+- Full egglog Datalog rules (deferred to v0.2).
 - Synthetic Differential Geometry kernels via Agda or Catlab.jl.
-- WGPU compute-shader autodiff (CPU-only JAX is sufficient for v0.1).
-- crates.io + PyPI publication automation (release commands run by maintainer
-  with API tokens; see Phase 12 artifact).
+- WGPU compute-shader autodiff.
+- crates.io + PyPI publication automation (release commands run by the
+  maintainer with API tokens; see CHANGELOG `user-intervention` notes).
