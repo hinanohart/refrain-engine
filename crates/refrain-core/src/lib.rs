@@ -50,8 +50,9 @@ mod tests {
     }
 
     #[test]
-    fn parser_not_yet_implemented() {
-        let r = parser::parse("(refrain x)");
-        assert!(matches!(r, Err(error::RefrainError::Parse(_))));
+    fn parser_parses_empty_refrain() {
+        let r = parser::parse("(refrain x)").unwrap();
+        assert_eq!(r.name, "x");
+        assert!(r.territorialize.is_none());
     }
 }
