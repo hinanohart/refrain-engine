@@ -36,6 +36,7 @@ The deferrals listed in `CHANGELOG.md` collect here:
 | Live Loro CRDT collaboration (`refrain-rhizome` wired with `loro` crate) | Loro 1.0 beta can yank; wait for stable | v0.2 |
 | Arrow IPC zero-copy on the PyO3 boundary | JSON suffices until adapters need to ship binary buffers | v0.2 |
 | Standalone runnable examples in `examples/` | the workspace integration test covers the same ground for v0.1 | v0.2 |
+| `cargo-fuzz` nightly run (24 h) | the architecture target; v0.1 ships proptest + hypothesis coverage instead, fuzz lands when CI runners are budgeted | v0.2 |
 | Published binaries on crates.io and PyPI | requires user-set API tokens (R11 boundary) | done outside the build pipeline |
 
 ## Verification PoCs (from concept doc 2026-05-17)

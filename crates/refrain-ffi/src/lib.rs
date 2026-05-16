@@ -4,6 +4,12 @@
 //! is JSON for v0.1.0; Arrow IPC zero-copy lands when adapters need to
 //! ship binary buffers (Phase 7+).
 
+// The pyo3 0.22 #[pyfunction] / #[pymodule] macros expand to
+// `Into::<PyErr>::into(...)` even when the value is already a `PyErr`.
+// The lint fires on the macro output, not on our source — suppress at
+// crate scope rather than touching macro-internal code.
+#![allow(clippy::useless_conversion)]
+
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
@@ -30,7 +36,9 @@ fn normalize_refrain(json_src: &str) -> PyResult<String> {
     let r: Refrain = serde_json::from_str(json_src)
         .map_err(|e| PyValueError::new_err(format!("invalid refrain JSON: {}", e)))?;
     let e = Egraph::default();
-    let n = e.normalize(&r).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let n = e
+        .normalize(&r)
+        .map_err(|e| PyValueError::new_err(e.to_string()))?;
     serde_json::to_string(&n).map_err(|e| PyValueError::new_err(e.to_string()))
 }
 
@@ -38,7 +46,9 @@ fn normalize_refrain(json_src: &str) -> PyResult<String> {
 fn parse_and_normalize(src: &str) -> PyResult<String> {
     let r = refrain_core::parse(src).map_err(|e| PyValueError::new_err(e.to_string()))?;
     let e = Egraph::default();
-    let n = e.normalize(&r).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let n = e
+        .normalize(&r)
+        .map_err(|e| PyValueError::new_err(e.to_string()))?;
     serde_json::to_string(&n).map_err(|e| PyValueError::new_err(e.to_string()))
 }
 

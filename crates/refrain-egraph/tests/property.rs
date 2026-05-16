@@ -42,11 +42,10 @@ fn arb_pattern() -> impl Strategy<Value = Pattern> {
     leaf.prop_recursive(3, 16, 4, |inner| {
         prop_oneof![
             // Loop with random count 0..5
-            (0u32..5, inner.clone())
-                .prop_map(|(count, body)| Pattern::Op(Op::Loop {
-                    count,
-                    body: Box::new(body),
-                })),
+            (0u32..5, inner.clone()).prop_map(|(count, body)| Pattern::Op(Op::Loop {
+                count,
+                body: Box::new(body),
+            })),
             // Seq of 2..4 patterns
             prop::collection::vec(inner.clone(), 2..4).prop_map(Pattern::Seq),
             // Call with random head and 0..3 args

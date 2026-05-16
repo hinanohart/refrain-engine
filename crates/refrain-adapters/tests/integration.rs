@@ -69,5 +69,7 @@ fn parse_normalize_emit_text_prose_deterministic() {
         .emit(&ExtractedRefrain { refrain: &n }, &EmitCtx::default())
         .unwrap();
     assert_eq!(b1, b2);
-    assert!(std::str::from_utf8(&b1).unwrap().contains("# Refrain: melody-a"));
+    assert!(std::str::from_utf8(&b1)
+        .unwrap()
+        .contains("# Refrain: melody-a"));
 }

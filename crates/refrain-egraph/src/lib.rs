@@ -267,8 +267,7 @@ mod tests {
 
     #[test]
     fn normalize_is_idempotent() {
-        let r =
-            parse("(refrain a (territorialize (loop 1 (loop 1 (note C4 q)))))").unwrap();
+        let r = parse("(refrain a (territorialize (loop 1 (loop 1 (note C4 q)))))").unwrap();
         let n1 = Egraph::default().normalize(&r).unwrap();
         let n2 = Egraph::default().normalize(&n1).unwrap();
         assert_eq!(n1, n2);

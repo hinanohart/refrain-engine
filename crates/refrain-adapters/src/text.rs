@@ -46,7 +46,9 @@ fn collect_haps(refrain: &Refrain) -> Vec<Hap> {
 
 // A small seeded LCG so the same (refrain, seed) yields the same output.
 fn lcg(state: &mut u64) -> u64 {
-    *state = state.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
+    *state = state
+        .wrapping_mul(6364136223846793005)
+        .wrapping_add(1442695040888963407);
     *state
 }
 
@@ -60,9 +62,16 @@ fn render_hap(h: &Hap, state: &mut u64, style: TextStyle) -> String {
         TextStyle::Prose => match &h.pitch {
             Some(p) => format!(
                 "At cycle {:.4}, the voice {} {} for {:.4} cycles{}",
-                h.start, verb, p, h.duration(), suffix
+                h.start,
+                verb,
+                p,
+                h.duration(),
+                suffix
             ),
-            None => format!("At cycle {:.4}, a structural mark: {}{}", h.start, h.value, suffix),
+            None => format!(
+                "At cycle {:.4}, a structural mark: {}{}",
+                h.start, h.value, suffix
+            ),
         },
         TextStyle::Bullets => match &h.pitch {
             Some(p) => format!("- t={:.4} {} {} dur={:.4}", h.start, verb, p, h.duration()),
@@ -110,7 +119,11 @@ mod tests {
     fn prose_contains_pitch_lines() {
         let r = parse("(refrain a (territorialize (loop 4 (note C4 q))))").unwrap();
         let a = TextAdapter::new(TextStyle::Prose);
-        let s = String::from_utf8(a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap()).unwrap();
+        let s = String::from_utf8(
+            a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+                .unwrap(),
+        )
+        .unwrap();
         assert!(s.contains("# Refrain: a"));
         assert_eq!(s.matches("C4").count(), 4);
     }
@@ -119,7 +132,11 @@ mod tests {
     fn bullets_uses_dash_prefix() {
         let r = parse("(refrain b (territorialize (note G4 e)))").unwrap();
         let a = TextAdapter::new(TextStyle::Bullets);
-        let s = String::from_utf8(a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap()).unwrap();
+        let s = String::from_utf8(
+            a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+                .unwrap(),
+        )
+        .unwrap();
         assert!(s.contains("- t="));
         assert!(s.contains("G4"));
     }
@@ -128,8 +145,12 @@ mod tests {
     fn deterministic_for_same_seed() {
         let r = parse("(refrain c (territorialize (loop 4 (note C4 q))))").unwrap();
         let a = TextAdapter::with_seed(TextStyle::Prose, 42);
-        let s1 = a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap();
-        let s2 = a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap();
+        let s1 = a
+            .emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+            .unwrap();
+        let s2 = a
+            .emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+            .unwrap();
         assert_eq!(s1, s2);
     }
 
@@ -138,8 +159,12 @@ mod tests {
         let r = parse("(refrain c (territorialize (loop 4 (note C4 q))))").unwrap();
         let a = TextAdapter::with_seed(TextStyle::Prose, 1);
         let b = TextAdapter::with_seed(TextStyle::Prose, 2);
-        let sa = a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap();
-        let sb = b.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap();
+        let sa = a
+            .emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+            .unwrap();
+        let sb = b
+            .emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+            .unwrap();
         assert_ne!(sa, sb);
     }
 
@@ -147,7 +172,11 @@ mod tests {
     fn empty_refrain_emits_just_header() {
         let r = parse("(refrain e)").unwrap();
         let a = TextAdapter::new(TextStyle::Prose);
-        let s = String::from_utf8(a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap()).unwrap();
+        let s = String::from_utf8(
+            a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+                .unwrap(),
+        )
+        .unwrap();
         assert_eq!(s, "# Refrain: e\n");
     }
 

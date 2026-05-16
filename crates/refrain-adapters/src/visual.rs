@@ -218,8 +218,12 @@ mod tests {
         let v = VisualAdapter::new();
         let r1 = parse("(refrain a (territorialize (loop 4 (note C4 q))))").unwrap();
         let r2 = parse("(refrain a (territorialize (loop 4 (note G4 e))))").unwrap();
-        let b1 = v.emit(&ExtractedRefrain { refrain: &r1 }, &EmitCtx::default()).unwrap();
-        let b2 = v.emit(&ExtractedRefrain { refrain: &r2 }, &EmitCtx::default()).unwrap();
+        let b1 = v
+            .emit(&ExtractedRefrain { refrain: &r1 }, &EmitCtx::default())
+            .unwrap();
+        let b2 = v
+            .emit(&ExtractedRefrain { refrain: &r2 }, &EmitCtx::default())
+            .unwrap();
         assert_ne!(b1, b2);
     }
 
@@ -237,8 +241,12 @@ mod tests {
         let r = parse("(refrain a (territorialize (note C4 q)))").unwrap();
         let small = VisualAdapter::with_size(16, 16);
         let big = VisualAdapter::with_size(256, 256);
-        let small_bytes = small.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap();
-        let big_bytes = big.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap();
+        let small_bytes = small
+            .emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+            .unwrap();
+        let big_bytes = big
+            .emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+            .unwrap();
         assert!(small_bytes.len() < big_bytes.len());
     }
 

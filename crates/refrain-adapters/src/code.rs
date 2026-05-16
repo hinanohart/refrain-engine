@@ -150,8 +150,14 @@ mod tests {
                    (reterritorialize (quotient ~r ~s)))";
         let original = parse(src).unwrap();
         let a = CodeAdapter::new(CodeLang::Python);
-        let emitted =
-            String::from_utf8(a.emit(&ExtractedRefrain { refrain: &original }, &EmitCtx::default()).unwrap()).unwrap();
+        let emitted = String::from_utf8(
+            a.emit(
+                &ExtractedRefrain { refrain: &original },
+                &EmitCtx::default(),
+            )
+            .unwrap(),
+        )
+        .unwrap();
         // Pull out the refrain literal from the emitted Python and reparse.
         let start = emitted.find("\"(refrain").expect("refrain literal found") + 1;
         let end = emitted[start..].find(")\"\n").expect("closing quote") + start + 1;
@@ -164,7 +170,11 @@ mod tests {
     fn empty_refrain_emits_minimal_python() {
         let r = parse("(refrain x)").unwrap();
         let a = CodeAdapter::new(CodeLang::Python);
-        let s = String::from_utf8(a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default()).unwrap()).unwrap();
+        let s = String::from_utf8(
+            a.emit(&ExtractedRefrain { refrain: &r }, &EmitCtx::default())
+                .unwrap(),
+        )
+        .unwrap();
         assert!(s.contains("(refrain x)"));
     }
 

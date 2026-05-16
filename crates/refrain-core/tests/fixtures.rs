@@ -4,10 +4,7 @@ use refrain_core::{parse, Op, Pattern, Refrain};
 
 const FIXTURES: &[(&str, &str)] = &[
     ("empty", "(refrain a)"),
-    (
-        "simple-note",
-        "(refrain a (territorialize (note C4 q)))",
-    ),
+    ("simple-note", "(refrain a (territorialize (note C4 q)))"),
     (
         "three-stages",
         "(refrain a \
@@ -15,10 +12,7 @@ const FIXTURES: &[(&str, &str)] = &[
          (deterritorialize (note D4 q)) \
          (reterritorialize (note E4 q)))",
     ),
-    (
-        "loop",
-        "(refrain a (territorialize (loop 4 (note C4 q))))",
-    ),
+    ("loop", "(refrain a (territorialize (loop 4 (note C4 q))))"),
     (
         "diff",
         "(refrain a (deterritorialize (dy/dx intensity time)))",
@@ -43,14 +37,8 @@ const FIXTURES: &[(&str, &str)] = &[
         "whitespace",
         "(refrain\n  whitespace-name\n  (territorialize\n    (note C4 q)))",
     ),
-    (
-        "sharp-pitch",
-        "(refrain a (territorialize (note G#3 e)))",
-    ),
-    (
-        "long-dur",
-        "(refrain a (territorialize (note C4 whole)))",
-    ),
+    ("sharp-pitch", "(refrain a (territorialize (note G#3 e)))"),
+    ("long-dur", "(refrain a (territorialize (note C4 whole)))"),
     (
         "complex",
         "(refrain melody \
@@ -70,18 +58,9 @@ const FIXTURES: &[(&str, &str)] = &[
         "many-quotient",
         "(refrain a (reterritorialize (quotient ~a ~b ~c ~d)))",
     ),
-    (
-        "deter-only",
-        "(refrain a (deterritorialize (dy/dx x t)))",
-    ),
-    (
-        "reter-only",
-        "(refrain a (reterritorialize (quotient ~r)))",
-    ),
-    (
-        "call-form",
-        "(refrain a (territorialize (rest h)))",
-    ),
+    ("deter-only", "(refrain a (deterritorialize (dy/dx x t)))"),
+    ("reter-only", "(refrain a (reterritorialize (quotient ~r)))"),
+    ("call-form", "(refrain a (territorialize (rest h)))"),
     (
         "deep-nested",
         "(refrain a (territorialize (loop 2 (loop 3 (loop 4 (note C4 s))))))",
@@ -145,7 +124,10 @@ fn parse_quotient_collects_rels() {
     let r = parse("(refrain a (reterritorialize (quotient ~a ~b ~c)))").unwrap();
     match r.reterritorialize.as_ref().unwrap() {
         Pattern::Op(Op::Quotient { rels }) => {
-            assert_eq!(rels, &vec!["~a".to_string(), "~b".to_string(), "~c".to_string()]);
+            assert_eq!(
+                rels,
+                &vec!["~a".to_string(), "~b".to_string(), "~c".to_string()]
+            );
         }
         other => panic!("expected Quotient, got {:?}", other),
     }
@@ -216,8 +198,8 @@ fn parse_handles_comments() {
 
 #[test]
 fn refrain_stages_iter_yields_only_present() {
-    let r = parse("(refrain a (territorialize (note C4 q)) (reterritorialize (quotient ~r)))")
-        .unwrap();
+    let r =
+        parse("(refrain a (territorialize (note C4 q)) (reterritorialize (quotient ~r)))").unwrap();
     let stages: Vec<_> = r.stages().collect();
     assert_eq!(stages.len(), 2);
 }

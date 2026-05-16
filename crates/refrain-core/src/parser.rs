@@ -157,9 +157,7 @@ fn sexp_to_pattern(s: &Sexp) -> Result<Pattern> {
             match head {
                 "note" => {
                     if xs.len() != 3 {
-                        return Err(RefrainError::Parse(
-                            "note expects (note PITCH DUR)".into(),
-                        ));
+                        return Err(RefrainError::Parse("note expects (note PITCH DUR)".into()));
                     }
                     let pitch = expect_atom(&xs[1], "note pitch")?.to_string();
                     let dur = expect_atom(&xs[2], "note dur")?.to_string();
@@ -167,9 +165,7 @@ fn sexp_to_pattern(s: &Sexp) -> Result<Pattern> {
                 }
                 "loop" => {
                     if xs.len() != 3 {
-                        return Err(RefrainError::Parse(
-                            "loop expects (loop COUNT BODY)".into(),
-                        ));
+                        return Err(RefrainError::Parse("loop expects (loop COUNT BODY)".into()));
                     }
                     let count_atom = expect_atom(&xs[1], "loop count")?;
                     let count: u32 = count_atom.parse().map_err(|_| {
@@ -180,9 +176,7 @@ fn sexp_to_pattern(s: &Sexp) -> Result<Pattern> {
                 }
                 "dy/dx" => {
                     if xs.len() != 3 {
-                        return Err(RefrainError::Parse(
-                            "dy/dx expects (dy/dx X T)".into(),
-                        ));
+                        return Err(RefrainError::Parse("dy/dx expects (dy/dx X T)".into()));
                     }
                     let x = expect_atom(&xs[1], "dy/dx x")?.to_string();
                     let t = expect_atom(&xs[2], "dy/dx t")?.to_string();

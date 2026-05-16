@@ -50,10 +50,22 @@ Initial release of the Differential Refrain Engine.
 
 ### Tests
 
-- 68 Rust unit tests + 5 cross-crate integration tests + 500 property
-  test cases (5 properties × 100 cases) + 1 doctest, all passing.
-- 45 Python tests (`pytest`) covering autodiff, the Ehrhard-Regnier
-  combinator, cell complex, and the native bridge.
+- 85 Rust unit + integration tests across all crates (Refrain DSL fixtures,
+  parser robustness, e-graph normalization, audio/visual/code/text adapters,
+  rhizome bridge merge invariants, cross-crate integration smoke tests) plus
+  19 property-based test functions covering scheduler totality, JSON
+  emission validity, OSC framing, PNG header preservation, code-emission
+  round-trip, text-adapter seed determinism, parser non-panic on arbitrary
+  text, comment transparency, and rhizome merge idempotence. Property
+  functions exercise ~64–100 cases each (≈1500 case runs total). One
+  doctest. All passing.
+- A true SHA-256 golden test fixes the byte-deterministic visual adapter
+  output for a canonical refrain at a fixed canvas size.
+- 53 Python tests (`pytest`) including 8 `hypothesis` property tests
+  covering the sum, product, and chain rules of the dual-number autodiff
+  and structural properties of the Ehrhard-Regnier combinator.
+- `cargo-fuzz` nightly is deferred to v0.2 (see `docs/roadmap.md`); v0.1
+  ships proptest + hypothesis coverage instead.
 
 ### Documented deviations from the initial design
 
