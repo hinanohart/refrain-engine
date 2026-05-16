@@ -6,9 +6,11 @@
 
 pub mod audio;
 pub mod schedule;
+pub mod visual;
 
 pub use audio::{AudioAdapter, AudioFormat};
 pub use schedule::{schedule, Hap};
+pub use visual::VisualAdapter;
 
 use refrain_core::Refrain;
 use thiserror::Error;
