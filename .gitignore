@@ -32,3 +32,6 @@ Thumbs.db
 experiments/_wip/
 *.log
 .envrc
+
+# mdbook output (rebuilt by `mdbook build` from docs/book/src/)
+docs/book/book/

@@ -1,0 +1,17 @@
+[book]
+title = "Differential Refrain Engine"
+authors = ["runza"]
+language = "en"
+src = "src"
+description = "User guide for the Differential Refrain Engine."
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/runza/refrain-engine"
+edit-url-template = "https://github.com/runza/refrain-engine/edit/main/docs/book/{path}"
+no-section-label = false
+
+[output.html.fold]
+enable = true
+level = 1
