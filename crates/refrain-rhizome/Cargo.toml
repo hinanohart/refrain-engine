@@ -19,8 +19,8 @@ default = []
 rhizome = []
 
 [dependencies]
-refrain-core = { path = "../refrain-core" }
-refrain-egraph = { path = "../refrain-egraph" }
+refrain-core = { path = "../refrain-core", version = "0.1.0" }
+refrain-egraph = { path = "../refrain-egraph", version = "0.1.0" }
 serde = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }

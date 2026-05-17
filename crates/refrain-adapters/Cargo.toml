@@ -14,7 +14,7 @@ name = "refrain_adapters"
 path = "src/lib.rs"
 
 [dependencies]
-refrain-core = { path = "../refrain-core" }
+refrain-core = { path = "../refrain-core", version = "0.1.0" }
 png = { workspace = true }
 rosc = { workspace = true }
 serde = { workspace = true }
@@ -23,6 +23,6 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
-refrain-egraph = { path = "../refrain-egraph" }
+refrain-egraph = { path = "../refrain-egraph", version = "0.1.0" }
 proptest = { workspace = true }
 sha2 = "0.10"

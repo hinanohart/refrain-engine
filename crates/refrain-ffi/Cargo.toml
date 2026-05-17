@@ -15,8 +15,8 @@ path = "src/lib.rs"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-refrain-core = { path = "../refrain-core" }
-refrain-egraph = { path = "../refrain-egraph" }
+refrain-core = { path = "../refrain-core", version = "0.1.0" }
+refrain-egraph = { path = "../refrain-egraph", version = "0.1.0" }
 pyo3 = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }

@@ -14,7 +14,7 @@ name = "refrain_egraph"
 path = "src/lib.rs"
 
 [dependencies]
-refrain-core = { path = "../refrain-core" }
+refrain-core = { path = "../refrain-core", version = "0.1.0" }
 egg = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }

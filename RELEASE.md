@@ -1,5 +1,17 @@
 # Release procedure — v0.1.0 onward
 
+> **Quick path:** every step below is wrapped by
+> [`scripts/release.sh`](./scripts/release.sh). Set
+> `CARGO_REGISTRY_TOKEN` + `PYPI_TOKEN` + `gh auth login`, then run:
+>
+> ```bash
+> ./scripts/release.sh --dry-run    # validate everything is publishable
+> ./scripts/release.sh              # actual publish
+> ```
+>
+> The detailed step-by-step below is the same procedure as a reference
+> for anyone who wants to run it by hand or audit what the script does.
+
 This file is the runbook the maintainer follows to take the local
 `v0.1.0` tag to a published release on GitHub + crates.io + PyPI.
 Each step depends on a secret the maintainer holds; none of these
