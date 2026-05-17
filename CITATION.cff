@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Differential Refrain Engine — unified time-pattern DSL (egg + autodiff + Loro + Strudel)"
+authors:
+  - family-names: "Hart"
+    given-names: "Hinano"
+    alias: "hinanohart"
+type: software
+license: "NOASSERTION"
+repository-code: "https://github.com/hinanohart/refrain-engine"
+url: "https://github.com/hinanohart/refrain-engine"
+version: "0.1.0"
+date-released: "2026-05-17"
+keywords:
+  - "autodiff"
+  - "crdt"
+  - "dsl"
+  - "egraph"
+  - "equality-saturation"
+  - "live-coding"
+  - "python"
+  - "rust"
+  - "topology"
+  - "time-pattern"
