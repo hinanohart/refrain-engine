@@ -99,4 +99,4 @@ Initial release of the Differential Refrain Engine.
 - `inventory::submit!`-based adapter auto-registration.
 - Published binaries on crates.io and PyPI.
 
-[0.1.0]: https://github.com/runza/refrain-engine/releases/tag/v0.1.0
+[0.1.0]: https://github.com/hinanohart/refrain-engine/releases/tag/v0.1.0

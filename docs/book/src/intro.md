@@ -25,7 +25,7 @@ The engine compiles a refrain through these layers, in order:
 ## Quickstart
 
 ```bash
-git clone https://github.com/runza/refrain-engine
+git clone https://github.com/hinanohart/refrain-engine
 cd refrain-engine
 cargo test --workspace
 python -m venv .venv && source .venv/bin/activate

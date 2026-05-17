@@ -44,7 +44,7 @@ set -euo pipefail
 # --- config ---------------------------------------------------------------
 VERSION="0.1.0"
 TAG="v${VERSION}"
-GITHUB_REPO="runza/refrain-engine"
+GITHUB_REPO="hinanohart/refrain-engine"
 PUBLISH_ORDER=(refrain-core refrain-egraph refrain-rhizome refrain-adapters)
 
 # refrain-ffi is a cdylib for maturin; NOT a standalone crates.io target.

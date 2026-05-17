@@ -6,7 +6,7 @@ sharpen rather than expand the scope are most welcome.
 ## Quick start
 
 ```bash
-git clone https://github.com/runza/refrain-engine
+git clone https://github.com/hinanohart/refrain-engine
 cd refrain-engine
 cargo test --all
 python -m venv .venv && source .venv/bin/activate
