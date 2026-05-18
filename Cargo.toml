@@ -32,7 +32,7 @@ rosc = "0.11"
 # pure Rust, deterministic output for SHA-256 golden testing).
 png = "0.17"
 # Phase 5 (FFI)
-pyo3 = { version = "0.24", features = ["extension-module", "abi3-py310"] }
+pyo3 = { version = "0.28", features = ["extension-module", "abi3-py310"] }
 arrow = "53"
 # Phase 10 (rhizome, optional)
 loro = "1.0.0-beta.5"
