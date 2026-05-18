@@ -25,4 +25,4 @@ tracing = { workspace = true }
 [dev-dependencies]
 refrain-egraph = { path = "../refrain-egraph", version = "0.1.0" }
 proptest = { workspace = true }
-sha2 = "0.10"
+sha2 = "0.11"
