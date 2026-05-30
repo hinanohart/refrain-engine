@@ -22,7 +22,7 @@ pytest
   internal rule numbers in commit messages.
 - **PRs**: phase-per-branch (`phase/NN-name`). Draft PRs are fine; do not enable
   auto-merge — every merge to `main` is reviewed by hand.
-- **License headers**: not required (MIT covers the repo).
+- **License headers**: not required (the MIT OR Apache-2.0 dual license covers the repo).
 
 ## Filing issues
 
